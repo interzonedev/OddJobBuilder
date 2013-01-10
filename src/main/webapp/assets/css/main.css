@@ -1,0 +1,36 @@
+/*
+
+Author styles go here.
+
+*/
+
+.inline {
+	display: inline;
+}
+
+label.wider {
+	width: 50px;
+	text-align: right;
+	float: left;
+	padding-right: 5px;
+}
+
+.link {
+	cursor: pointer;
+}
+
+.spacer {
+	margin-top: 20px;
+}
+
+.formError {
+	display: none;
+}
+
+.htmlTemplate {
+	display: none;
+}
+
+.nameValuePairContainer {
+	margin-bottom: 5px;
+}
