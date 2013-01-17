@@ -1,6 +1,6 @@
 package com.interzonedev.oddjobbuilder.web.builder;
 
-import java.util.Properties;
+import java.io.File;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.stereotype.Controller;
@@ -35,12 +35,23 @@ public class BuilderController extends OddJobBuilderController {
 
 		try {
 			// Call service
-			log.debug("System properties:");
-			Properties systemProperties = System.getProperties();
-			for (Object key : systemProperties.keySet()) {
-				Object value = systemProperties.get(key);
-				log.debug("  \"" + key + "\" = \"" + value + "\"");
-			}
+			String userDir = System.getProperty("user.dir");
+			log.debug("userDir = " + userDir);
+
+			File temp = new File(".");
+			String absolutePath = temp.getAbsolutePath();
+			String canonicalPath = temp.getCanonicalPath();
+			String path = temp.getPath();
+			boolean isAbsolute = temp.isAbsolute();
+			boolean isDirectory = temp.isDirectory();
+			boolean isFile = temp.isFile();
+
+			log.debug("absolutePath = " + absolutePath);
+			log.debug("canonicalPath = " + canonicalPath);
+			log.debug("path = " + path);
+			log.debug("isAbsolute = " + isAbsolute);
+			log.debug("isDirectory = " + isDirectory);
+			log.debug("isFile = " + isFile);
 
 		} catch (Throwable t) {
 			log.error("buildLibrary: Error building library", t);
