@@ -38,13 +38,17 @@ public class BuilderController extends OddJobBuilderController {
 			String userDir = System.getProperty("user.dir");
 			log.debug("userDir = " + userDir);
 
-			File temp = new File(".");
-			String absolutePath = temp.getAbsolutePath();
-			String canonicalPath = temp.getCanonicalPath();
-			String path = temp.getPath();
-			boolean isAbsolute = temp.isAbsolute();
-			boolean isDirectory = temp.isDirectory();
-			boolean isFile = temp.isFile();
+			String tempDirPath = userDir + "/tmp";
+			File tempDir = new File(tempDirPath);
+			tempDir.mkdir();
+			tempDir.deleteOnExit();
+
+			String absolutePath = tempDir.getAbsolutePath();
+			String canonicalPath = tempDir.getCanonicalPath();
+			String path = tempDir.getPath();
+			boolean isAbsolute = tempDir.isAbsolute();
+			boolean isDirectory = tempDir.isDirectory();
+			boolean isFile = tempDir.isFile();
 
 			log.debug("absolutePath = " + absolutePath);
 			log.debug("canonicalPath = " + canonicalPath);
