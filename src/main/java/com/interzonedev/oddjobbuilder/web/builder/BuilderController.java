@@ -1,6 +1,7 @@
 package com.interzonedev.oddjobbuilder.web.builder;
 
-import java.io.File;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.interzonedev.oddjobbuilder.service.BuilderService;
 import com.interzonedev.oddjobbuilder.web.OddJobBuilderController;
 
 @Controller
@@ -17,6 +19,10 @@ public class BuilderController extends OddJobBuilderController {
 
 	private static final String FORM_VIEW = "builder/form";
 	private static final String RESULTS_VIEW = "builder/results";
+
+	@Inject
+	@Named("builderService")
+	private BuilderService builderService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String displayForm(Model model) {
@@ -35,27 +41,10 @@ public class BuilderController extends OddJobBuilderController {
 
 		try {
 			// Call service
-			String userDir = System.getProperty("user.dir");
-			log.debug("userDir = " + userDir);
+			String compressedLibraryFilepath = builderService.buildLibrary(builderForm.isIncludeAjax(),
+					builderForm.isIncludeLogger(), builderForm.isIncludeJQueryUtils());
 
-			String tempDirPath = userDir + "/tmp";
-			File tempDir = new File(tempDirPath);
-			tempDir.mkdir();
-			tempDir.deleteOnExit();
-
-			String absolutePath = tempDir.getAbsolutePath();
-			String canonicalPath = tempDir.getCanonicalPath();
-			String path = tempDir.getPath();
-			boolean isAbsolute = tempDir.isAbsolute();
-			boolean isDirectory = tempDir.isDirectory();
-			boolean isFile = tempDir.isFile();
-
-			log.debug("absolutePath = " + absolutePath);
-			log.debug("canonicalPath = " + canonicalPath);
-			log.debug("path = " + path);
-			log.debug("isAbsolute = " + isAbsolute);
-			log.debug("isDirectory = " + isDirectory);
-			log.debug("isFile = " + isFile);
+			log.debug("buildLibrary: compressedLibraryFilepath = " + compressedLibraryFilepath);
 
 		} catch (Throwable t) {
 			log.error("buildLibrary: Error building library", t);
