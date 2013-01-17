@@ -1,5 +1,7 @@
 package com.interzonedev.oddjobbuilder.web.builder;
 
+import java.util.Properties;
+
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,13 @@ public class BuilderController extends OddJobBuilderController {
 
 		try {
 			// Call service
+			log.debug("System properties:");
+			Properties systemProperties = System.getProperties();
+			for (Object key : systemProperties.keySet()) {
+				Object value = systemProperties.get(key);
+				log.debug("  \"" + key + "\" = \"" + value + "\"");
+			}
+
 		} catch (Throwable t) {
 			log.error("buildLibrary: Error building library", t);
 			String errorMessage = t.getMessage();
