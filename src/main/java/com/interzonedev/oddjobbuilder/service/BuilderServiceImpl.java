@@ -1,9 +1,19 @@
 package com.interzonedev.oddjobbuilder.service;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.jgit.api.CloneCommand;
@@ -11,9 +21,13 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
+import org.mozilla.javascript.ErrorReporter;
+import org.mozilla.javascript.EvaluatorException;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Logger;
+
+import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 
 @Named("builderService")
 public class BuilderServiceImpl implements BuilderService {
@@ -22,11 +36,29 @@ public class BuilderServiceImpl implements BuilderService {
 
 	private final String userDir = System.getProperty("user.dir");
 
-	private final String tempDirPath = userDir + "/tmp";
+	private String workDirPath;
 
-	private static final String REPO_URL = "git://github.com/interzonedev/OddJob.git";
+	private String relativeRepoDirPath;
 
-	private static final String REPO_TAG = "v1.2.0";
+	private String relativeBuildDirPath;
+
+	private String repoUrl;
+
+	private String repoTag;
+
+	private String javaScriptSourceDir;
+
+	private List<String> requiredFilenames;
+
+	private Map<String, String> optionalFilenames;
+
+	@Inject
+	@Named("builderProperties")
+	private Properties builderProperties;
+
+	@Inject
+	@Named("errorReporter")
+	private ErrorReporter errorReporter;
 
 	private class WorkDirectories {
 
@@ -51,7 +83,30 @@ public class BuilderServiceImpl implements BuilderService {
 
 	@PostConstruct
 	public void init() {
-		log.debug("init: userDir = " + userDir);
+		String relativeWorkDirPath = builderProperties.getProperty("builder.work.directory");
+		workDirPath = userDir + relativeWorkDirPath;
+
+		relativeRepoDirPath = builderProperties.getProperty("builder.repo.directory");
+		relativeBuildDirPath = builderProperties.getProperty("builder.build.directory");
+
+		repoUrl = builderProperties.getProperty("repo.url");
+		repoTag = builderProperties.getProperty("repo.tag");
+
+		javaScriptSourceDir = builderProperties.getProperty("compress.javascript.source.dir");
+
+		String requiredFilenamesValues = builderProperties.getProperty("compress.requiredFilenames");
+		requiredFilenames = Arrays.asList(requiredFilenamesValues.split("\\s*,\\s*"));
+
+		String optionalComponentsValues = builderProperties.getProperty("compress.optionalComponents");
+		List<String> optionalComponents = Arrays.asList(optionalComponentsValues.split("\\s*,\\s*"));
+
+		optionalFilenames = new HashMap<String, String>();
+		for (String optionalComponent : optionalComponents) {
+			optionalFilenames.put(optionalComponent,
+					builderProperties.getProperty("compress.optionalFilename." + optionalComponent));
+		}
+
+		log.debug("init: workDirPath = " + workDirPath);
 	}
 
 	@Override
@@ -63,10 +118,49 @@ public class BuilderServiceImpl implements BuilderService {
 
 		cloneRepo(workDirectories.getRepoDirectoryPath());
 
+		compressJavaScript(workDirectories.getRepoDirectoryPath(), workDirectories.getBuildDirectoryPath());
+
 		log.debug("buildLibrary: End");
 
 		return null;
 
+	}
+
+	private void compressJavaScript(String repoDirectoryPath, String buildDirectoryPath) throws EvaluatorException,
+			IOException {
+
+		Reader in = null;
+		Writer out = null;
+		String compressedContent = null;
+
+		try {
+
+			in = new FileReader(repoDirectoryPath + javaScriptSourceDir + "oj.js");
+			JavaScriptCompressor javaScriptCompressor = new JavaScriptCompressor(in, errorReporter);
+			out = new StringWriter();
+			javaScriptCompressor.compress(out, -1, true, true, true, false);
+			compressedContent = out.toString();
+
+		} finally {
+
+			if (null != in) {
+				try {
+					in.close();
+				} catch (IOException ioe) {
+					log.error("Error closing compression input reader", ioe);
+				}
+			}
+
+			if (null != out) {
+				try {
+					out.close();
+				} catch (IOException ioe) {
+					log.error("Error closing compression output writer", ioe);
+				}
+			}
+		}
+
+		log.debug("compressedContent = " + compressedContent);
 	}
 
 	private void cloneRepo(String repoDirectoryPath) throws InvalidRemoteException, TransportException, GitAPIException {
@@ -78,28 +172,28 @@ public class BuilderServiceImpl implements BuilderService {
 			return;
 		}
 
-		log.debug("cloneRepo: Cloning repo from " + REPO_URL);
+		log.debug("cloneRepo: Cloning repo from " + repoUrl);
 
 		CloneCommand cloneCommand = new CloneCommand();
 
-		Git git = cloneCommand.setURI(REPO_URL).setDirectory(repoDirectory).setBranch("master").call();
+		Git git = cloneCommand.setURI(repoUrl).setDirectory(repoDirectory).setBranch("master").call();
 
-		git.checkout().setName(REPO_TAG).call();
+		git.checkout().setName(repoTag).call();
 
-		log.debug("cloneRepo: Cloned repo into " + repoDirectory + " and checked out " + REPO_TAG);
+		log.debug("cloneRepo: Cloned repo into " + repoDirectory + " and checked out " + repoTag);
 
 	}
 
 	private WorkDirectories initDirectories() throws IOException {
 
-		String tempDirCanonicalPath = makeDirectory(tempDirPath);
+		String workDirCanonicalPath = makeDirectory(workDirPath);
 
-		log.debug("Using temp directory: " + tempDirCanonicalPath);
+		log.debug("Using temp directory: " + workDirCanonicalPath);
 
-		String repoDirPath = tempDirCanonicalPath + "/repo";
+		String repoDirPath = workDirCanonicalPath + relativeRepoDirPath;
 		String repoDirCanonicalPath = makeDirectory(repoDirPath);
 
-		String buildDirPath = tempDirCanonicalPath + "/build";
+		String buildDirPath = workDirCanonicalPath + relativeBuildDirPath;
 		String buildDirCanonicalPath = makeDirectory(buildDirPath);
 
 		return new WorkDirectories(repoDirCanonicalPath, buildDirCanonicalPath);
@@ -119,8 +213,6 @@ public class BuilderServiceImpl implements BuilderService {
 				throw new IOException("Unable to create the tmp directory: " + dirPath);
 			}
 
-			dir.deleteOnExit();
-
 			created = true;
 		}
 
@@ -135,4 +227,5 @@ public class BuilderServiceImpl implements BuilderService {
 		return dirCanonicalPath;
 
 	}
+
 }
