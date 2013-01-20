@@ -14,6 +14,15 @@ public class BuilderErrorReporter implements ErrorReporter {
 	private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 
 	@Override
+	public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
+
+		String errorMessage = getMessage(message, sourceName, line, lineSource, lineOffset);
+
+		log.warn(errorMessage);
+
+	}
+
+	@Override
 	public void error(String message, String sourceName, int line, String lineSource, int lineOffset) {
 
 		String errorMessage = getMessage(message, sourceName, line, lineSource, lineOffset);
@@ -31,15 +40,6 @@ public class BuilderErrorReporter implements ErrorReporter {
 		log.error(errorMessage);
 
 		return new EvaluatorException(errorMessage);
-
-	}
-
-	@Override
-	public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
-
-		String errorMessage = getMessage(message, sourceName, line, lineSource, lineOffset);
-
-		log.warn(errorMessage);
 
 	}
 

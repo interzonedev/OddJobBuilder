@@ -118,7 +118,8 @@ public class BuilderServiceImpl implements BuilderService {
 
 		cloneRepo(workDirectories.getRepoDirectoryPath());
 
-		compressJavaScript(workDirectories.getRepoDirectoryPath(), workDirectories.getBuildDirectoryPath());
+		compressJavaScript(workDirectories.getRepoDirectoryPath(), workDirectories.getBuildDirectoryPath(),
+				includeAjax, includeLogger, includeJQueryUtils);
 
 		log.debug("buildLibrary: End");
 
@@ -126,41 +127,80 @@ public class BuilderServiceImpl implements BuilderService {
 
 	}
 
-	private void compressJavaScript(String repoDirectoryPath, String buildDirectoryPath) throws EvaluatorException,
-			IOException {
+	private void compressJavaScript(String repoDirectoryPath, String buildDirectoryPath, boolean includeAjax,
+			boolean includeLogger, boolean includeJQueryUtils) throws EvaluatorException, IOException {
 
-		Reader in = null;
-		Writer out = null;
+		StringBuilder compressedContent = new StringBuilder();
+
+		for (String requiredFilename : requiredFilenames) {
+			String compressedRequiredFileContent = compressJavaScriptFile(repoDirectoryPath, requiredFilename);
+			compressedContent.append(compressedRequiredFileContent);
+		}
+		log.info("compressJavaScript: Core library compressed size = " + compressedContent.length());
+
+		if (includeAjax) {
+			String ajaxFilename = optionalFilenames.get("ajax");
+			String compressedAjaxFileContent = compressJavaScriptFile(repoDirectoryPath, ajaxFilename);
+			compressedContent.append(compressedAjaxFileContent);
+			log.info("compressJavaScript: Ajax component compressed size = " + compressedAjaxFileContent.length());
+		}
+
+		if (includeLogger) {
+			String loggerFilename = optionalFilenames.get("logger");
+			String compressedLoggerFileContent = compressJavaScriptFile(repoDirectoryPath, loggerFilename);
+			compressedContent.append(compressedLoggerFileContent);
+			log.info("compressJavaScript: Logger component compressed size = " + compressedLoggerFileContent.length());
+		}
+
+		if (includeJQueryUtils) {
+			String jQueryUtilsFilename = optionalFilenames.get("jQueryUtils");
+			String compressedJQueryUtilsFileContent = compressJavaScriptFile(repoDirectoryPath, jQueryUtilsFilename);
+			compressedContent.append(compressedJQueryUtilsFileContent);
+			log.info("compressJavaScript: jQuery utils component compressed size = "
+					+ compressedJQueryUtilsFileContent.length());
+		}
+
+		log.info("compressJavaScript: Total library compressed size = " + compressedContent.length());
+
+	}
+
+	private String compressJavaScriptFile(String repoDirectoryPath, String sourceJavaScriptFilename)
+			throws EvaluatorException, IOException {
+
 		String compressedContent = null;
 
-		try {
+		Reader sourceJavaScriptIn = null;
+		Writer compressedJavaScriptOut = null;
 
-			in = new FileReader(repoDirectoryPath + javaScriptSourceDir + "oj.js");
-			JavaScriptCompressor javaScriptCompressor = new JavaScriptCompressor(in, errorReporter);
-			out = new StringWriter();
-			javaScriptCompressor.compress(out, -1, true, true, true, false);
-			compressedContent = out.toString();
+		try {
+			String sourceJavaScriptFilePath = repoDirectoryPath + javaScriptSourceDir + sourceJavaScriptFilename;
+			sourceJavaScriptIn = new FileReader(sourceJavaScriptFilePath);
+			JavaScriptCompressor javaScriptCompressor = new JavaScriptCompressor(sourceJavaScriptIn, errorReporter);
+			compressedJavaScriptOut = new StringWriter();
+			javaScriptCompressor.compress(compressedJavaScriptOut, -1, true, true, true, false);
+			compressedContent = compressedJavaScriptOut.toString();
 
 		} finally {
 
-			if (null != in) {
+			if (null != sourceJavaScriptIn) {
 				try {
-					in.close();
+					sourceJavaScriptIn.close();
 				} catch (IOException ioe) {
 					log.error("Error closing compression input reader", ioe);
 				}
 			}
 
-			if (null != out) {
+			if (null != compressedJavaScriptOut) {
 				try {
-					out.close();
+					compressedJavaScriptOut.close();
 				} catch (IOException ioe) {
 					log.error("Error closing compression output writer", ioe);
 				}
 			}
 		}
 
-		log.debug("compressedContent = " + compressedContent);
+		return compressedContent;
+
 	}
 
 	private void cloneRepo(String repoDirectoryPath) throws InvalidRemoteException, TransportException, GitAPIException {
