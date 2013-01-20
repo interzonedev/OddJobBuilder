@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.interzonedev.oddjobbuilder.service.BuilderRequest;
+import com.interzonedev.oddjobbuilder.service.BuilderResponse;
 import com.interzonedev.oddjobbuilder.service.BuilderService;
 import com.interzonedev.oddjobbuilder.web.OddJobBuilderController;
 
@@ -40,21 +42,26 @@ public class BuilderController extends OddJobBuilderController {
 		log.debug("buildLibrary: Start");
 
 		try {
-			// Call service
-			String compressedLibraryFilepath = builderService.buildLibrary(builderForm.isIncludeAjax(),
+
+			BuilderRequest builderRequest = new BuilderRequest(builderForm.isIncludeAjax(),
 					builderForm.isIncludeLogger(), builderForm.isIncludeJQueryUtils());
 
-			log.debug("buildLibrary: compressedLibraryFilepath = " + compressedLibraryFilepath);
+			// Call service
+			BuilderResponse builderResponse = builderService.buildLibrary(builderRequest);
+
+			log.debug("buildLibrary: compressedLibraryContents = " + builderResponse.getCompressedLibraryContents());
 
 		} catch (Throwable t) {
+
 			log.error("buildLibrary: Error building library", t);
 			String errorMessage = t.getMessage();
 			String stackTrace = ExceptionUtils.getStackTrace(t);
 			bindingResult.reject("error.builder", new Object[] { errorMessage, stackTrace }, null);
 			return FORM_VIEW;
+
 		}
 
-		// model.addAttribute("response", response);
+		// model.addAttribute("builderResponse", builderResponse);
 
 		log.debug("buildLibrary: End");
 

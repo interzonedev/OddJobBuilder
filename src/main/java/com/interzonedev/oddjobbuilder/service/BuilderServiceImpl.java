@@ -110,7 +110,7 @@ public class BuilderServiceImpl implements BuilderService {
 	}
 
 	@Override
-	public String buildLibrary(boolean includeAjax, boolean includeLogger, boolean includeJQueryUtils) throws Exception {
+	public BuilderResponse buildLibrary(BuilderRequest builderRequest) throws Exception {
 
 		log.debug("buildLibrary: Start");
 
@@ -118,17 +118,17 @@ public class BuilderServiceImpl implements BuilderService {
 
 		cloneRepo(workDirectories.getRepoDirectoryPath());
 
-		compressJavaScript(workDirectories.getRepoDirectoryPath(), workDirectories.getBuildDirectoryPath(),
-				includeAjax, includeLogger, includeJQueryUtils);
+		BuilderResponse builderResponse = compressJavaScript(workDirectories.getRepoDirectoryPath(),
+				workDirectories.getBuildDirectoryPath(), builderRequest);
 
 		log.debug("buildLibrary: End");
 
-		return null;
+		return builderResponse;
 
 	}
 
-	private void compressJavaScript(String repoDirectoryPath, String buildDirectoryPath, boolean includeAjax,
-			boolean includeLogger, boolean includeJQueryUtils) throws EvaluatorException, IOException {
+	private BuilderResponse compressJavaScript(String repoDirectoryPath, String buildDirectoryPath,
+			BuilderRequest builderRequest) throws EvaluatorException, IOException {
 
 		StringBuilder compressedContent = new StringBuilder();
 
@@ -136,31 +136,46 @@ public class BuilderServiceImpl implements BuilderService {
 			String compressedRequiredFileContent = compressJavaScriptFile(repoDirectoryPath, requiredFilename);
 			compressedContent.append(compressedRequiredFileContent);
 		}
-		log.info("compressJavaScript: Core library compressed size = " + compressedContent.length());
+		int coreLibrarySize = compressedContent.length();
+		log.info("compressJavaScript: Core library compressed size = " + coreLibrarySize);
 
-		if (includeAjax) {
+		int ajaxComponentSize = -1;
+		int loggerComponentSize = -1;
+		int jQueryUtilsComponentSize = -1;
+
+		if (builderRequest.isIncludeAjax()) {
 			String ajaxFilename = optionalFilenames.get("ajax");
 			String compressedAjaxFileContent = compressJavaScriptFile(repoDirectoryPath, ajaxFilename);
 			compressedContent.append(compressedAjaxFileContent);
-			log.info("compressJavaScript: Ajax component compressed size = " + compressedAjaxFileContent.length());
+			ajaxComponentSize = compressedAjaxFileContent.length();
+			log.info("compressJavaScript: Ajax component compressed size = " + ajaxComponentSize);
 		}
 
-		if (includeLogger) {
+		if (builderRequest.isIncludeLogger()) {
 			String loggerFilename = optionalFilenames.get("logger");
 			String compressedLoggerFileContent = compressJavaScriptFile(repoDirectoryPath, loggerFilename);
 			compressedContent.append(compressedLoggerFileContent);
-			log.info("compressJavaScript: Logger component compressed size = " + compressedLoggerFileContent.length());
+			loggerComponentSize = compressedLoggerFileContent.length();
+			log.info("compressJavaScript: Logger component compressed size = " + loggerComponentSize);
 		}
 
-		if (includeJQueryUtils) {
+		if (builderRequest.isIncludeJQueryUtils()) {
 			String jQueryUtilsFilename = optionalFilenames.get("jQueryUtils");
 			String compressedJQueryUtilsFileContent = compressJavaScriptFile(repoDirectoryPath, jQueryUtilsFilename);
 			compressedContent.append(compressedJQueryUtilsFileContent);
-			log.info("compressJavaScript: jQuery utils component compressed size = "
-					+ compressedJQueryUtilsFileContent.length());
+			jQueryUtilsComponentSize = compressedJQueryUtilsFileContent.length();
+			log.info("compressJavaScript: jQuery utils component compressed size = " + jQueryUtilsComponentSize);
 		}
 
-		log.info("compressJavaScript: Total library compressed size = " + compressedContent.length());
+		int totalLibrarySize = compressedContent.length();
+		log.info("compressJavaScript: Total library compressed size = " + totalLibrarySize);
+
+		String compressedLibraryContents = compressedContent.toString();
+
+		BuilderResponse builderResponse = new BuilderResponse(coreLibrarySize, ajaxComponentSize, loggerComponentSize,
+				jQueryUtilsComponentSize, totalLibrarySize, compressedLibraryContents);
+
+		return builderResponse;
 
 	}
 
