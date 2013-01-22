@@ -47,16 +47,6 @@
 		<p>Total library size = ${builderResponse.totalLibrarySize} bytes</p>
 	</c:if>
 
-	<div id="statsDisplay" class="control-group">
-		<p>Core library size = <span id="coreLibrarySize"></span> bytes</p>
-		<p>Ajax component size = <span id="ajaxComponentSize"></span> bytes</p>
-		<p>Logger component size = <span id="loggerComponentSize"></span> bytes</p>
-		<p>jQuery utils component size = <span id="jQueryUtilsComponentSize"></span> bytes</p>
-		<p>Total library size = <span id="totalLibrarySizeContainer"></span> bytes</p>
-	</div>
-
-	<div id="errorContainer" class="control-group error"></div>
-
 	<input id="getStatsTrigger" type="submit" name="stats" value="Get File Sizes" class="btn" />
 	<input type="submit" name="download" value="Download" class="btn" />
 
