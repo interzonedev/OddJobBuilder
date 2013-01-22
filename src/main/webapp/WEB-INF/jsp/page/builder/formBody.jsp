@@ -3,7 +3,7 @@
 
 <c:url var="formAction" value="/builder" scope="page" />
 
-<form:form modelAttribute="builderForm" action="${formAction}" method="post">
+<form:form modelAttribute="builderForm" action="${formAction}" method="get">
 
 	<form:errors>
 		<div class="control-group error">
@@ -29,6 +29,35 @@
 		<form:errors path="includeJQueryUtils"><p><form:errors path="includeJQueryUtils" cssClass="help-inline" /></p></form:errors>
 	</div>
 
-	<input type="submit" value="Submit" class="btn" />
+	<c:if test="${not empty builderResponse}">
+		<p>Core library size = ${builderResponse.coreLibrarySize} bytes</p>
+
+		<c:if test="${builderResponse.ajaxComponentSize gt -1}">
+			<p>Ajax component size = ${builderResponse.ajaxComponentSize} bytes</p>
+		</c:if>
+
+		<c:if test="${builderResponse.loggerComponentSize gt -1}">
+			<p>Logger component size = ${builderResponse.loggerComponentSize} bytes</p>
+		</c:if>
+
+		<c:if test="${builderResponse.JQueryUtilsComponentSize gt -1}">
+			<p>jQuery utils component size = ${builderResponse.JQueryUtilsComponentSize} bytes</p>
+		</c:if>
+
+		<p>Total library size = ${builderResponse.totalLibrarySize} bytes</p>
+	</c:if>
+
+	<div id="statsDisplay" class="control-group">
+		<p>Core library size = <span id="coreLibrarySize"></span> bytes</p>
+		<p>Ajax component size = <span id="ajaxComponentSize"></span> bytes</p>
+		<p>Logger component size = <span id="loggerComponentSize"></span> bytes</p>
+		<p>jQuery utils component size = <span id="jQueryUtilsComponentSize"></span> bytes</p>
+		<p>Total library size = <span id="totalLibrarySizeContainer"></span> bytes</p>
+	</div>
+
+	<div id="errorContainer" class="control-group error"></div>
+
+	<input id="getStatsTrigger" type="submit" name="stats" value="Get File Sizes" class="btn" />
+	<input type="submit" name="download" value="Download" class="btn" />
 
 </form:form>

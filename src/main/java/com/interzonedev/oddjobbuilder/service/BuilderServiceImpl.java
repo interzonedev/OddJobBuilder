@@ -52,6 +52,8 @@ public class BuilderServiceImpl implements BuilderService {
 
 	private Map<String, String> optionalFilenames;
 
+	private String downloadFilename;
+
 	@Inject
 	@Named("builderProperties")
 	private Properties builderProperties;
@@ -106,6 +108,8 @@ public class BuilderServiceImpl implements BuilderService {
 					builderProperties.getProperty("compress.optionalFilename." + optionalComponent));
 		}
 
+		downloadFilename = builderProperties.getProperty("compress.downloadFilename");
+
 		log.debug("init: workDirPath = " + workDirPath);
 	}
 
@@ -119,7 +123,7 @@ public class BuilderServiceImpl implements BuilderService {
 		cloneRepo(workDirectories.getRepoDirectoryPath());
 
 		BuilderResponse builderResponse = compressJavaScript(workDirectories.getRepoDirectoryPath(),
-				workDirectories.getBuildDirectoryPath(), builderRequest);
+				workDirectories.getBuildDirectoryPath(), downloadFilename, builderRequest);
 
 		log.debug("buildLibrary: End");
 
@@ -128,7 +132,7 @@ public class BuilderServiceImpl implements BuilderService {
 	}
 
 	private BuilderResponse compressJavaScript(String repoDirectoryPath, String buildDirectoryPath,
-			BuilderRequest builderRequest) throws EvaluatorException, IOException {
+			String downloadFilename, BuilderRequest builderRequest) throws EvaluatorException, IOException {
 
 		StringBuilder compressedContent = new StringBuilder();
 
@@ -173,7 +177,7 @@ public class BuilderServiceImpl implements BuilderService {
 		String compressedLibraryContents = compressedContent.toString();
 
 		BuilderResponse builderResponse = new BuilderResponse(coreLibrarySize, ajaxComponentSize, loggerComponentSize,
-				jQueryUtilsComponentSize, totalLibrarySize, compressedLibraryContents);
+				jQueryUtilsComponentSize, totalLibrarySize, compressedLibraryContents, downloadFilename);
 
 		return builderResponse;
 

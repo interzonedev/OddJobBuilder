@@ -14,14 +14,18 @@ public class BuilderResponse {
 
 	private final String compressedLibraryContents;
 
+	private final String downloadFilename;
+
 	public BuilderResponse(int coreLibrarySize, int ajaxComponentSize, int loggerComponentSize,
-			int jQueryUtilsComponentSize, int totalLibrarySize, String compressedLibraryContents) {
+			int jQueryUtilsComponentSize, int totalLibrarySize, String compressedLibraryContents,
+			String downloadFilename) {
 		this.coreLibrarySize = coreLibrarySize;
 		this.ajaxComponentSize = ajaxComponentSize;
 		this.loggerComponentSize = loggerComponentSize;
 		this.jQueryUtilsComponentSize = jQueryUtilsComponentSize;
 		this.totalLibrarySize = totalLibrarySize;
 		this.compressedLibraryContents = compressedLibraryContents;
+		this.downloadFilename = downloadFilename;
 	}
 
 	public int getCoreLibrarySize() {
@@ -36,7 +40,7 @@ public class BuilderResponse {
 		return loggerComponentSize;
 	}
 
-	public int getjQueryUtilsComponentSize() {
+	public int getJQueryUtilsComponentSize() {
 		return jQueryUtilsComponentSize;
 	}
 
@@ -46,6 +50,10 @@ public class BuilderResponse {
 
 	public String getCompressedLibraryContents() {
 		return compressedLibraryContents;
+	}
+
+	public String getDownloadFilename() {
+		return downloadFilename;
 	}
 
 }
