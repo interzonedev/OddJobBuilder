@@ -5,7 +5,7 @@
 
 <h2>Create custom builds of the OddJob JavaScript framework</h2>
 
-<form:form modelAttribute="builderForm" action="${formAction}" method="get">
+<form:form modelAttribute="builderForm" action="${formAction}" method="post">
 
 	<form:errors>
 		<div class="control-group error">
