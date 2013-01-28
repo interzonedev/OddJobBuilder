@@ -16,7 +16,7 @@
 		<meta name="description"
 			content="Webapp that allows for custom builds of the OddJob Object Oriented JavaScript framework.." />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width" />
 
 		<link rel="icon" href="<c:url value="/assets/img/favicon.png" />" type="image/png" />
 
