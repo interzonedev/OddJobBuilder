@@ -20,13 +20,14 @@
 
 		<link rel="icon" href="<c:url value="/assets/img/favicon.png" />" type="image/png" />
 
-		<jsp:include page="../frag/commonHeadCss.jsp" />
+		<link rel="stylesheet" href="<c:url value="/assets/css/normalize.css" />" />
+		<link rel="stylesheet" href="<c:url value="/assets/css/main.css" />" />
 
 		<c:if test="${not empty param.cssIncludes}">
 			<jsp:include page="${param.cssIncludes}" />
 		</c:if>
 
-		<jsp:include page="../frag/commonHeadJsIncludes.jsp" />
+		<script src="<c:url value="/assets/js/lib/modernizr-2.6.2.min.js" />"></script>
 
 		<c:if test="${not empty param.headJsIncludes}">
 			<jsp:include page="${param.headJsIncludes}" />
@@ -34,21 +35,25 @@
 	</head>
 
 	<body>
-		<jsp:include page="../frag/top.jsp" />
+		<header>
+			<h1>OddJob Builder</h1>
+			<nav>
+				<ul>
+					<li><a href="<c:url value="/home" />">Home</a></li>
+					<li><a href="<c:url value="/builder" />">Builder</a></li>
+				</ul>
+			</nav>
+		</header>
 
-		<div class="container">
+		<div class="mainContainer">
 			<jsp:include page="${param.bodyContent}" />
-
-			<jsp:include page="../frag/bottom.jsp" />
 		</div>
 
-		<jsp:include page="../frag/commonBodyJsIncludes.jsp" />
+		<script src="<c:url value="/assets/js/lib/jquery-1.9.0.min.js" />"></script>
 
 		<c:if test="${not empty param.bodyJsIncludes}">
 			<jsp:include page="${param.bodyJsIncludes}" />
 		</c:if>
-
-		<jsp:include page="../frag/commonBodyJsSetUp.jsp" />
 
 		<c:if test="${not empty param.bodyJsSetUp}">
 			<jsp:include page="${param.bodyJsSetUp}" />
