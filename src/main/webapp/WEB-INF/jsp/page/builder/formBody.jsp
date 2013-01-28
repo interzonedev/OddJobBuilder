@@ -3,6 +3,8 @@
 
 <c:url var="formAction" value="/builder" scope="page" />
 
+<h2>Create custom builds of the OddJob JavaScript framework</h2>
+
 <form:form modelAttribute="builderForm" action="${formAction}" method="get">
 
 	<form:errors>

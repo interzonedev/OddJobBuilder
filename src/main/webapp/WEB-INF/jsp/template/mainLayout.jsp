@@ -11,10 +11,11 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-		<title>OddJob Builder Application - ${param.title}</title>
+		<title>OddJob - Object Oriented JavaScript Framework - ${param.title}</title>
 
-		<meta name="description"
-			content="Webapp that allows for custom builds of the OddJob Object Oriented JavaScript framework.." />
+		<c:if test="${not empty param.description}">
+			<meta name="description" content="${param.description}" />
+		</c:if>
 
 		<meta name="viewport" content="width=device-width" />
 
