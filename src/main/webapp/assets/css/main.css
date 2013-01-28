@@ -93,12 +93,71 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+.btn {
+	border-radius: 5px;
+	padding: 2px;
+}
 
+.formGroup {
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+}
 
+.formError {
+	color: #ff0000;
+}
 
+.topHeader {
+	color: #ffffff;
+	background-color: #000000;
+	padding-left: 2em;
+}
 
+.topHeader h1 {
+	font-size: 1.5em;
+	float: left;
+}
 
+.topHeader nav {
+	float: left;
+}
 
+.topHeader nav ul li {
+	display: inline;
+	margin-left: 0.5em;
+}
+
+.topHeader nav a {
+	font-size: 1.3em;
+}
+
+.topHeader nav a,
+.topHeader nav a:hover,
+.topHeader nav a:visited,
+.topHeader nav a:active {
+	text-decoration: none;
+	color: green;
+}
+
+.topHeader nav a:hover {
+	color: red;
+}
+
+.topHeader nav a.current {
+	color: pink;
+}
+
+.mainContainer {
+	padding-left: 1.0em;
+}
+
+.mainContainer h2 {
+	font-size: 1.2em;
+}
+
+.mainContainer .sizesContainer {
+	padding-left: 1.5em;
+}
 
 
 

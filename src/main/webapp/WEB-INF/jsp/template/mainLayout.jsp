@@ -36,12 +36,12 @@
 	</head>
 
 	<body>
-		<header>
-			<h1>OddJob Builder</h1>
+		<header class="topHeader clearfix">
+			<h1>OddJob</h1>
 			<nav>
 				<ul>
-					<li><a href="<c:url value="/home" />">Home</a></li>
-					<li><a href="<c:url value="/builder" />">Builder</a></li>
+					<li><a href="<c:url value="/home" />" <c:if test="${param.pageId eq 'home'}">class="current"</c:if>>Home</a></li>
+					<li><a href="<c:url value="/builder" />" <c:if test="${param.pageId eq 'builder'}">class="current"</c:if>>Download</a></li>
 				</ul>
 			</nav>
 		</header>
