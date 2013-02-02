@@ -51,7 +51,7 @@
 		</div>
 	</c:if>
 
-	<input id="getStatsTrigger" type="submit" name="stats" value="Get File Sizes" class="btn" />
+	<input id="getStatsTrigger" type="submit" name="stats" value="File Sizes" class="btn" />
 	<input type="submit" name="download" value="Download" class="btn" />
 
 </form:form>

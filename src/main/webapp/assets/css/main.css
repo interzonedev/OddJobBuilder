@@ -125,6 +125,14 @@ textarea {
 .topHeader nav ul li {
 	display: inline;
 	margin-left: 0.5em;
+	border-left: 1px solid #ffffff;
+	padding-left: 0.7em;
+	padding-top: 0.5em;
+	padding-bottom: 0.3em;
+}
+
+.topHeader nav ul li:first-child {
+	border-left: none;
 }
 
 .topHeader nav a {
@@ -151,8 +159,33 @@ textarea {
 	padding-left: 1.0em;
 }
 
+.mainContainer a,
+.mainContainer a:hover,
+.mainContainer a:visited,
+.mainContainer a:active {
+	text-decoration: none;
+	color: #0000ff;
+}
+
+.mainContainer a:hover {
+	text-decoration: underline;
+}
+
 .mainContainer h2 {
 	font-size: 1.2em;
+}
+
+.mainContainer .componentsList p {
+	margin-bottom: 0;
+}
+
+.mainContainer .componentsList ul {
+	padding-left: 0.5em;
+	margin-top: 0;
+}
+
+.mainContainer .componentsList ul li {
+	list-style: none;
 }
 
 .mainContainer .sizesContainer {

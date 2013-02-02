@@ -41,6 +41,7 @@
 			<nav>
 				<ul>
 					<li><a href="<c:url value="/home" />" <c:if test="${param.pageId eq 'home'}">class="current"</c:if>>Home</a></li>
+					<li><a href="<c:url value="/docs" />" <c:if test="${param.pageId eq 'docs'}">class="current"</c:if>>Documentation</a></li>
 					<li><a href="<c:url value="/builder" />" <c:if test="${param.pageId eq 'builder'}">class="current"</c:if>>Download</a></li>
 				</ul>
 			</nav>

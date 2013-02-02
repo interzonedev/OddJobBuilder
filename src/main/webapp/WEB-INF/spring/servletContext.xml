@@ -20,6 +20,7 @@
 
 	<mvc:view-controller path="/" view-name="home/home" />
 	<mvc:view-controller path="/home" view-name="home/home" />
+	<mvc:view-controller path="/docs" view-name="docs/docs" />
 	<mvc:view-controller path="/error" view-name="error/error" />
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
