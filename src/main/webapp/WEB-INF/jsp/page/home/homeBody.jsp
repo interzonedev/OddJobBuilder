@@ -13,8 +13,8 @@
 		<a href="http://base2.googlecode.com/svn/version/1.0.2/doc/base2.html#/doc/!base2.Base" target="_blank">docs</a>
 		) and John Resig's blog on
 		<a href="http://ejohn.org/blog/simple-javascript-inheritance" target="_blank">Simple JavaScript Inheritance</a>.
-		The packaging functionality was inspired by the <a href="http://dojotoolkit.org">Dojo</a> toolkit.
-		It also sprung from some front end work I did with
+		The packaging functionality was inspired by the <a href="http://dojotoolkit.org" target="_blank">Dojo</a>
+		toolkit. It also sprung from some front end work I did with
 		<a href="http://www.briandillard.com" target="_blank">Brian Dillard</a> and
 		<a href="http://www.linkedin.com/in/kemapak" target="_blank">Kem Apak</a>.
 	</p>
