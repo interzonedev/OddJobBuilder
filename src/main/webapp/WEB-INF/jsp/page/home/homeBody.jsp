@@ -13,13 +13,14 @@
 		<a href="http://base2.googlecode.com/svn/version/1.0.2/doc/base2.html#/doc/!base2.Base" target="_blank">docs</a>
 		) and John Resig's blog on
 		<a href="http://ejohn.org/blog/simple-javascript-inheritance" target="_blank">Simple JavaScript Inheritance</a>.
+		The packaging functionality was inspired by the <a href="http://dojotoolkit.org">Dojo</a> toolkit.
 		It also sprung from some front end work I did with
 		<a href="http://www.briandillard.com" target="_blank">Brian Dillard</a> and
 		<a href="http://www.linkedin.com/in/kemapak" target="_blank">Kem Apak</a>.
 	</p>
 
 	<p>
-		The core ObbJob library is very lightweight and contains the ability to create classes and class hierarchies,
+		The core ObbJob library is very lightweight and contains the ability to create classes and package hierarchies,
 		define namespaces for package like structures and a minimal set of utility methods.
 	</p>
 
