@@ -17,6 +17,8 @@
 	<mvc:annotation-driven />
 
 	<mvc:resources mapping="/assets/**" location="/assets/" />
+	<mvc:resources mapping="/jsdoc/**" location="/jsdoc/" />
+	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" />
 
 	<mvc:view-controller path="/" view-name="home/home" />
 	<mvc:view-controller path="/home" view-name="home/home" />

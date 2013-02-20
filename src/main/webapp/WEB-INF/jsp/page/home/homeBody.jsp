@@ -24,6 +24,11 @@
 		define namespaces for package like structures and a minimal set of utility methods.
 	</p>
 
+	<p>
+		The source code and build utilities for the OddJob project can be found at
+		<a href="https://github.com/interzonedev/OddJob" target="_blank">GitHub</a>.
+	</p>
+
 	<div class="componentsList">
 		<p>Optional components can be included in custom <a href="<c:url value="/builder" />">builds</a>:</p>
 		<ul>

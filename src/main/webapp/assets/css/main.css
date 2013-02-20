@@ -93,6 +93,10 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+body {
+	background-color: #f8f8f8;
+}
+
 .btn {
 	border-radius: 5px;
 	padding: 2px;
@@ -144,19 +148,21 @@ textarea {
 .topHeader nav a:visited,
 .topHeader nav a:active {
 	text-decoration: none;
-	color: green;
+	color: #008000;
 }
 
 .topHeader nav a:hover {
-	color: red;
+	color: #ff0000;
 }
 
 .topHeader nav a.current {
-	color: pink;
+	/*color: pink;*/
+	color: #faafbe;
 }
 
 .mainContainer {
 	padding-left: 1.0em;
+	padding-right: 1.0em;
 }
 
 .mainContainer a,
@@ -164,7 +170,7 @@ textarea {
 .mainContainer a:visited,
 .mainContainer a:active {
 	text-decoration: none;
-	color: #0000ff;
+	color: #008000;
 }
 
 .mainContainer a:hover {
