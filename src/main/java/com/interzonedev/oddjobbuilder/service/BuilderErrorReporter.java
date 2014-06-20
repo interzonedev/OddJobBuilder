@@ -11,48 +11,48 @@ import ch.qos.logback.classic.Logger;
 @Named("errorReporter")
 public class BuilderErrorReporter implements ErrorReporter {
 
-	private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
+    private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 
-	@Override
-	public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
+    @Override
+    public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
 
-		String errorMessage = getMessage(message, sourceName, line, lineSource, lineOffset);
+        String errorMessage = getMessage(message, sourceName, line, lineSource, lineOffset);
 
-		log.warn(errorMessage);
+        log.warn(errorMessage);
 
-	}
+    }
 
-	@Override
-	public void error(String message, String sourceName, int line, String lineSource, int lineOffset) {
+    @Override
+    public void error(String message, String sourceName, int line, String lineSource, int lineOffset) {
 
-		String errorMessage = getMessage(message, sourceName, line, lineSource, lineOffset);
+        String errorMessage = getMessage(message, sourceName, line, lineSource, lineOffset);
 
-		log.error(errorMessage);
+        log.error(errorMessage);
 
-	}
+    }
 
-	@Override
-	public EvaluatorException runtimeError(String message, String sourceName, int line, String lineSource,
-			int lineOffset) {
+    @Override
+    public EvaluatorException runtimeError(String message, String sourceName, int line, String lineSource,
+            int lineOffset) {
 
-		String errorMessage = getMessage(message, sourceName, line, lineSource, lineOffset);
+        String errorMessage = getMessage(message, sourceName, line, lineSource, lineOffset);
 
-		log.error(errorMessage);
+        log.error(errorMessage);
 
-		return new EvaluatorException(errorMessage);
+        return new EvaluatorException(errorMessage);
 
-	}
+    }
 
-	private String getMessage(String message, String sourceName, int line, String lineSource, int lineOffset) {
+    private String getMessage(String message, String sourceName, int line, String lineSource, int lineOffset) {
 
-		StringBuilder errorMessage = new StringBuilder();
+        StringBuilder errorMessage = new StringBuilder();
 
-		if (line >= 0) {
-			errorMessage.append(line).append(":").append(lineOffset).append(":");
-		}
-		errorMessage.append(message);
+        if (line >= 0) {
+            errorMessage.append(line).append(":").append(lineOffset).append(":");
+        }
+        errorMessage.append(message);
 
-		return errorMessage.toString();
+        return errorMessage.toString();
 
-	}
+    }
 }

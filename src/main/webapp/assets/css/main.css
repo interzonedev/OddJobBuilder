@@ -9,12 +9,7 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
-html,
-button,
-input,
-select,
-textarea {
+html,button,input,select,textarea {
     color: #222;
 }
 
@@ -28,7 +23,6 @@ body {
  * These selection declarations have to be separate.
  * Customize the background color to match your design.
  */
-
 ::-moz-selection {
     background: #b3d4fc;
     text-shadow: none;
@@ -42,7 +36,6 @@ body {
 /*
  * A better looking default horizontal rule
  */
-
 hr {
     display: block;
     height: 1px;
@@ -55,7 +48,6 @@ hr {
 /*
  * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
  */
-
 img {
     vertical-align: middle;
 }
@@ -63,7 +55,6 @@ img {
 /*
  * Remove default fieldset styles.
  */
-
 fieldset {
     border: 0;
     margin: 0;
@@ -73,7 +64,6 @@ fieldset {
 /*
  * Allow only vertical resizing of textareas.
  */
-
 textarea {
     resize: vertical;
 }
@@ -81,7 +71,6 @@ textarea {
 /* ==========================================================================
    Chrome Frame prompt
    ========================================================================== */
-
 .chromeframe {
     margin: 0.2em 0;
     background: #ccc;
@@ -92,120 +81,106 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
 body {
-	background-color: #f8f8f8;
+    background-color: #f8f8f8;
 }
 
 .btn {
-	border-radius: 5px;
-	padding: 2px;
+    border-radius: 5px;
+    padding: 2px;
 }
 
 .formGroup {
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
 }
 
 .formError {
-	color: #ff0000;
+    color: #ff0000;
 }
 
 .topHeader {
-	color: #ffffff;
-	background-color: #000000;
-	padding-left: 2em;
+    color: #ffffff;
+    background-color: #000000;
+    padding-left: 2em;
 }
 
 .topHeader h1 {
-	font-size: 1.5em;
-	float: left;
+    font-size: 1.5em;
+    float: left;
 }
 
 .topHeader nav {
-	float: left;
+    float: left;
 }
 
 .topHeader nav ul li {
-	display: inline;
-	margin-left: 0.5em;
-	border-left: 1px solid #ffffff;
-	padding-left: 0.7em;
-	padding-top: 0.5em;
-	padding-bottom: 0.3em;
+    display: inline;
+    margin-left: 0.5em;
+    border-left: 1px solid #ffffff;
+    padding-left: 0.7em;
+    padding-top: 0.5em;
+    padding-bottom: 0.3em;
 }
 
 .topHeader nav ul li:first-child {
-	border-left: none;
+    border-left: none;
 }
 
 .topHeader nav a {
-	font-size: 1.3em;
+    font-size: 1.3em;
 }
 
-.topHeader nav a,
-.topHeader nav a:hover,
-.topHeader nav a:visited,
-.topHeader nav a:active {
-	text-decoration: none;
-	color: #008000;
+.topHeader nav a,.topHeader nav a:hover,.topHeader nav a:visited,.topHeader nav a:active
+    {
+    text-decoration: none;
+    color: #008000;
 }
 
 .topHeader nav a:hover {
-	color: #ff0000;
+    color: #ff0000;
 }
 
 .topHeader nav a.current {
-	/*color: pink;*/
-	color: #faafbe;
+    /*color: pink;*/
+    color: #faafbe;
 }
 
 .mainContainer {
-	padding-left: 1.0em;
-	padding-right: 1.0em;
+    padding-left: 1.0em;
+    padding-right: 1.0em;
 }
 
-.mainContainer a,
-.mainContainer a:hover,
-.mainContainer a:visited,
-.mainContainer a:active {
-	text-decoration: none;
-	color: #008000;
+.mainContainer a,.mainContainer a:hover,.mainContainer a:visited,.mainContainer a:active
+    {
+    text-decoration: none;
+    color: #008000;
 }
 
 .mainContainer a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .mainContainer h2 {
-	font-size: 1.2em;
+    font-size: 1.2em;
 }
 
 .mainContainer .componentsList p {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .mainContainer .componentsList ul {
-	padding-left: 0.5em;
-	margin-top: 0;
+    padding-left: 0.5em;
+    margin-top: 0;
 }
 
 .mainContainer .componentsList ul li {
-	list-style: none;
+    list-style: none;
 }
 
 .mainContainer .sizesContainer {
-	padding-left: 1.5em;
+    padding-left: 1.5em;
 }
-
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
    Helper classes
@@ -214,7 +189,6 @@ body {
 /*
  * Image replacement
  */
-
 .ir {
     background-color: transparent;
     border: 0;
@@ -233,7 +207,6 @@ body {
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
-
 .hidden {
     display: none !important;
     visibility: hidden;
@@ -242,10 +215,9 @@ body {
 /*
  * Hide only visually, but have it available for screenreaders: h5bp.com/v
  */
-
 .visuallyhidden {
     border: 0;
-    clip: rect(0 0 0 0);
+    clip: rect(0, 0, 0, 0);
     height: 1px;
     margin: -1px;
     overflow: hidden;
@@ -258,9 +230,7 @@ body {
  * Extends the .visuallyhidden class to allow the element to be focusable
  * when navigated to via the keyboard: h5bp.com/p
  */
-
-.visuallyhidden.focusable:active,
-.visuallyhidden.focusable:focus {
+.visuallyhidden.focusable:active,.visuallyhidden.focusable:focus {
     clip: auto;
     height: auto;
     margin: 0;
@@ -272,7 +242,6 @@ body {
 /*
  * Hide visually and from screenreaders, but maintain layout
  */
-
 .invisible {
     visibility: hidden;
 }
@@ -288,9 +257,7 @@ body {
  * 2. The use of `table` rather than `block` is only necessary if using
  *    `:before` to contain the top-margins of child elements.
  */
-
-.clearfix:before,
-.clearfix:after {
+.clearfix:before,.clearfix:after {
     content: " "; /* 1 */
     display: table; /* 2 */
 }
@@ -303,7 +270,6 @@ body {
  * For IE 6/7 only
  * Include this rule to trigger hasLayout and contain floats.
  */
-
 .clearfix {
     *zoom: 1;
 }
@@ -313,23 +279,19 @@ body {
    Theses examples override the primary ('mobile first') styles.
    Modify as content requires.
    ========================================================================== */
-
 @media only screen and (min-width: 35em) {
     /* Style adjustments for viewports that meet the condition */
 }
 
-@media print,
-       (-o-min-device-pixel-ratio: 5/4),
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
+@media print , ( -o-min-device-pixel-ratio : 5/4) , (
+        -webkit-min-device-pixel-ratio : 1.25) , ( min-resolution :
+    120dpi) { /* Style adjustments for high resolution devices */
 }
 
 /* ==========================================================================
    Print styles.
    Inlined to avoid required HTTP connection: h5bp.com/r
    ========================================================================== */
-
 @media print {
     * {
         background: transparent !important;
@@ -337,16 +299,12 @@ body {
         box-shadow: none !important;
         text-shadow: none !important;
     }
-
-    a,
-    a:visited {
+    a,a:visited {
         text-decoration: underline;
     }
-
     a[href]:after {
         content: " (" attr(href) ")";
     }
-
     abbr[title]:after {
         content: " (" attr(title) ")";
     }
@@ -354,45 +312,30 @@ body {
     /*
      * Don't show links for images, or javascript/internal links
      */
-
-    .ir a:after,
-    a[href^="javascript:"]:after,
-    a[href^="#"]:after {
+    .ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after {
         content: "";
     }
-
-    pre,
-    blockquote {
+    pre,blockquote {
         border: 1px solid #999;
         page-break-inside: avoid;
     }
-
     thead {
         display: table-header-group; /* h5bp.com/t */
     }
-
-    tr,
-    img {
+    tr,img {
         page-break-inside: avoid;
     }
-
     img {
         max-width: 100% !important;
     }
-
     @page {
         margin: 0.5cm;
     }
-
-    p,
-    h2,
-    h3 {
+    p,h2,h3 {
         orphans: 3;
         widows: 3;
     }
-
-    h2,
-    h3 {
+    h2,h3 {
         page-break-after: avoid;
     }
 }
